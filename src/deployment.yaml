@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app_
+  labels:
+    app: app_
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app_
+       template:
+    metadata:
+      name: app_
+      labels:
+        app: app_
+    spec:
+      containers:
+        - name: deplyment
+          image: ruisdaelmaia/app_:1.0.0
+          env:
+            - name: MONGODB_DB
+              value: "root"
+            - name: MONGODB_HOST
+              value: "mongodb"
+            - name: MONGODB_PORT
+              value: "20000"
+            - name: MONGODB_USERNAME
+              value: "ruisdaelamaia"
+            - name: MONGODB_PASSWORD
+              value: "teste@login"
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app_
+  labels:
+    app: app_
+spec:
+  selector:
+    app: app_
+  ports:
+    - name: app_
+      port: 80
+      nodePort: 30000
+  type: NodePort
